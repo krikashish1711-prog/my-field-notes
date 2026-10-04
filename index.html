@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Field Notes — a journal of making things</title>
+<meta name="description" content="Field Notes: essays on design, tools, and the craft of paying attention.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="noise-layer" aria-hidden="true"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand" onclick="goHome()">
+      <span class="mark"><span class="mark-dot"></span></span>
+      <span class="brand-word">Field<span class="brand-accent">Notes</span></span>
+    </div>
+
+    <nav class="side-nav" aria-label="Sidebar navigation">
+      <button class="nav-item active" type="button" data-role="home" data-category="All">
+        <span class="nav-icon">⌂</span>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" type="button" data-role="saved" data-category="Life">
+        <span class="nav-icon">◫</span>
+        <span>Saved</span>
+      </button>
+      <button class="nav-item" type="button" data-role="drafts" data-category="Craft">
+        <span class="nav-icon">▣</span>
+        <span>Drafts</span>
+      </button>
+      <button class="nav-item" type="button" data-role="categories" data-category="All">
+        <span class="nav-icon">▤</span>
+        <span>Categories</span>
+      </button>
+    </nav>
+
+    <div class="side-quote">
+      <div class="quote-mark">✦</div>
+      <p>Good ideas bloom here</p>
+    </div>
+  </aside>
+
+  <div class="content-panel">
+    <header class="site">
+      <nav class="nav">
+        <div class="brand desktop-brand" onclick="goHome()">
+          <span class="mark"><span class="mark-dot"></span></span>
+          Field<span class="brand-accent">Notes</span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><button class="active" data-role="home" data-category="All">Home</button></li>
+          <li><button data-role="culture" data-category="Culture">Culture</button></li>
+          <li><button data-role="technology" data-category="Technology">Technology</button></li>
+          <li><button data-role="life" data-category="Life">Life</button></li>
+          <li><button data-role="travel" data-category="Travel">Travel</button></li>
+        </ul>
+        <div class="nav-tools">
+          <div class="search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="searchInput" type="text" placeholder="Search articles…" oninput="onSearch()">
+          </div>
+          <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+            <svg id="themeIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+          </button>
+          <button class="icon-btn hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="wrap">
+
+  <div id="homeView" class="home-view">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-dot"></span>Featured essay</div>
+          <h1 id="featTitle"></h1>
+          <p id="featExcerpt"></p>
+          <span class="hero-byline" id="featByline"></span>
+          <div class="hero-actions">
+            <button class="btn" id="featBtn">Read the essay</button>
+            <button class="btn ghost" onclick="document.getElementById('postGrid').scrollIntoView({behavior:'smooth'})">Browse all</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-visual-glow"></div>
+          <div class="hero-visual-card" id="featVisual"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="filters" id="filterChips"></section>
+    <div class="result-row">
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <section class="grid" id="postGrid"></section>
+    <div class="loadmore-wrap"><button class="btn ghost" id="loadMoreBtn" onclick="loadMore()">Load more articles</button></div>
+  </div>
+
+  <article class="article-view" id="articleView">
+    <button class="back-link" onclick="goHome()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to all articles
+    </button>
+    <div class="article-hero" id="artHero"></div>
+    <div class="eyebrow" id="artCat"></div>
+    <h1 id="artTitle"></h1>
+    <div class="article-meta">
+      <span id="artAuthor"></span><span class="dot">·</span><span id="artDate"></span><span class="dot">·</span><span id="artRead"></span>
+    </div>
+    <div class="article-body" id="artBody"></div>
+    <div class="tag-row" id="artTags"></div>
+
+    <div class="share-row">
+      <span class="lbl">Share this article</span>
+      <div class="share-btns">
+        <a class="share-btn" id="shareTwitter" href="#" target="_blank" rel="noopener" aria-label="Share on X">𝕏</a>
+        <a class="share-btn" id="shareLinkedin" href="#" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+        <button class="share-btn" onclick="copyLink()" aria-label="Copy link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <h2 class="related-h">Related articles</h2>
+    <div class="related-grid" id="relatedGrid"></div>
+
+    <div class="comments">
+      <h2 id="commentCount">Comments</h2>
+      <form class="comment-form" onsubmit="submitComment(event)">
+        <input type="text" id="commentName" placeholder="Your name" required>
+        <textarea id="commentText" placeholder="Share your thoughts…" required></textarea>
+        <button class="btn" type="submit">Post comment</button>
+      </form>
+      <div id="commentList"></div>
+    </div>
+  </article>
+
+  <section class="newsletter-cta" aria-label="Subscribe and contact">
+    <div class="newsletter-box">
+      <div class="newsletter-copy">
+        <span class="mini-label">Join the journal</span>
+        <h2>Enjoy the stories. Stay in the loop.</h2>
+        <p>Get thoughtful essays, favorite links, and quiet inspiration delivered to your inbox.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="subscribe(event)">
+        <input id="newsEmail" type="email" placeholder="Enter your email" aria-label="Email address" required>
+        <button type="submit" class="btn">Subscribe</button>
+      </form>
+    </div>
+
+    <div class="contact-box">
+      <span class="mini-label">Get in touch</span>
+      <h3>Questions or ideas?</h3>
+      <a href="mailto:krikashish1711@gmail.com" class="contact-link">krikashish1711@gmail.com</a>
+    </div>
+  </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
